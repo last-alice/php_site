@@ -46,27 +46,27 @@ try
     $dbh = new PDO($dsn,$user,$password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT name,price,img FROM mst_product WHERE code=?';
+    $sql = 'SELECT name,price,img FROM mst_goods WHERE code=?';
     $stmt = $dbh->prepare($sql);
-    $data[] = $gods_code;
+    $data[] = $gds_code;
     $stmt->execute($data);
 
     $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-    $gods_name = $rec['name'];
-    $gods_price = $rec['price'];
-    $gods_gazou_name = $rec['img'];
+    $gds_name = $rec['name'];
+    $gds_price = $rec['price'];
+    $gds_gazou_name = $rec['img'];
 
     $dbh = null;
 
-    if($gods_img_name=='')
+    if($gds_img_name=='')
     {
         $disp_img='';
     }
     else
     {
-        $disp_img='<img src="../img'.$gods_img_name.'">';
+        $disp_img='<img src="../img'.$gds_img_name.'">';
     }
-    print '<a href="shop_cartin.php?procode='.$gods_code.'">カートに入れる</a><br><br>';
+    print '<a href="shop_cartin.php?procode='.$gds_code.'">カートに入れる</a><br><br>';
 
 }
 catch(Exception $e)
@@ -81,13 +81,13 @@ catch(Exception $e)
     商品情報参照<br>
         <br>
     商品コード<br>
-    <?php print $gods_code; ?>
+    <?php print $gds_code; ?>
         <br>
     商品名<br>
-    <?php print $gods_name; ?>
+    <?php print $gds_name; ?>
         <br>
     価格<br>
-    <?php print $gods_price; ?>円
+    <?php print $gds_price; ?>円
     <br>
     <?php print $disp_img; ?>
     <br>

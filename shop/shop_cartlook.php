@@ -65,7 +65,7 @@ try
 
 	foreach($cart as $key=>$val)
 	{
-		$sql='SELECT code,name,price,img FROM mst_product WHERE code=?';
+		$sql='SELECT code,name,price,img FROM mst_goods WHERE code=?';
 		$stmt=$dbh->prepare($sql);
 		$data[0]=$val;
 		$stmt->execute($data);
@@ -76,11 +76,11 @@ try
 		$pro_price[]=$rec['price'];
 		if($rec['img']=='')
 		{
-			$pro_img[]='';
+			$gds_img[]='';
 		}
 		else
 		{
-			$pro_img[]='<img src="../img'.$rec['img'].'">';
+			$gds_img[]='<img src="../img'.$rec['img'].'">';
 		}
 	}
 	$dbh=null;
@@ -111,11 +111,11 @@ catch(Exception $e)
 		{
 	?>
 	<tr>
-		<td><?php print $pro_name[$i]; ?></td>
-		<td><?php print $pro_gazou[$i]; ?></td>
-		<td><?php print $pro_price[$i]; ?>円</td>
+		<td><?php print $gds_name[$i]; ?></td>
+		<td><?php print $gds_img[$i]; ?></td>
+		<td><?php print $gds_price[$i]; ?>円</td>
 		<td><input type="text" name="qty<?php print $i; ?>" value="<?php print $kazu[$i]; ?>"></td>
-		<td><?php print $pro_price[$i]*$kazu[$i]; ?>円</td>
+		<td><?php print $gds_price[$i]*$kazu[$i]; ?>円</td>
 		<td><input type="checkbox" name="dlt<?php print $i; ?>"></td>
 	</tr>
 <?php

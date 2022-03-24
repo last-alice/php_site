@@ -21,7 +21,7 @@
 			print'<a href="shop_cartlook.php">カートに戻る</a>';
 			exit();
 		}
-		$qty[]=$post['qty'.$i];
+		$quantity[]=$post['qty'.$i];
 	}
 
 	$cart=$_SESSION['cart'];
@@ -31,12 +31,12 @@
 		if(isset($_POST['dlt'.$i])==true)
 		{
 			array_splice($cart,$i,1);
-			array_splice($qty,$i,1);
+			array_splice($quantity,$i,1);
 		}
 	}
 
 	$_SESSION['cart']=$cart;
-	$_SESSION['kazu']=$kazu;
+	$_SESSION['qty']=$quantity;
 
 	header('Location:shop_cartlook.php');
 ?>
