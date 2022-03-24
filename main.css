@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    border: 2em;
+}
+
+.button_0{
+    color: white;
+    background-color: cornflowerblue;
+    width: 250em;
+    height: 200em;
+    border-radius:10px;
+}
