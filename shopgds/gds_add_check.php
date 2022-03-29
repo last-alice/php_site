@@ -32,7 +32,7 @@
 	$gds_price = $post['price'];
 	$gds_img = $_FILES['img'];
 
-	if($pro_name=='')
+	if($gds_name=='')
 		{
 			print '商品名が入力されていません。<br />';
 		}
@@ -77,10 +77,10 @@
 	else
 	{
 		print '上記の商品を追加します。<br>';
-		print '<form method = "post" action = "pro_add_done.php">';
+		print '<form method = "post" action = "gds_add_done.php">';
 		print '<input type = "hidden" name = "name" value = "'.$gds_name.'">';
 		print '<input type = "hidden" name = "price" value = "'.$gds_price.'">';
-		print '<input type = "hidden" name = "gazou_name" value = "'.$gds_img['name'] .'">';
+		print '<input type = "hidden" name = "img_name" value = "'.$gds_img['name'] .'">';
 		print '<br>';
 		print '<input type = "button" onclick = "history.back()" value = "戻る">';
 		print '<input type = "submit" value = "OK">';
