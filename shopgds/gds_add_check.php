@@ -19,59 +19,74 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> ○○電機</title>
+<title>○○電機</title>
 </head>
 <body>
 
 <?php
 
-try
-{
+	require_once('../common/common.php');
 
-	$dsn='mysql:dbname=shop;host=localhost;charset=utf8';
-	$user='root';
-	$password='';
-	$dbh = new PDO($dsn,$user,$password);
-	$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	$post=sanitize($_POST);
+	$gds_name = $post['name'];
+	$gds_price = $post['price'];
+	$gds_img = $_FILES['img'];
 
-	$sql = 'SELECT code,name,price FROM mst_goods WHERE 1';
-	$stmt = $dbh->prepare($sql);
-	$stmt->execute();
-
-	$dbh = null;
-
-	print '商品一覧<br><br>';
-
-	print '<form method = "POST" action = "gds_branch.php">';
-while(true)
-{
-	$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-	if($rec==false)
-	{
-		break;
+	if($pro_name=='')
+		{
+			print '商品名が入力されていません。<br />';
+		}
+	else
+		{
+			print '商品名:';
+			print $gds_name;
+			print '<br>';
 	}
-	print '<input type = "radio" name = "gdscode" value = "'.$rec['code']. '">';
-	print $rec['name'].'---';
-	print $rec['price'].'円';
-	print '<br>';
-}
-	print '<input type = "submit" name = "disp" value = "参照">';
-	print '<input type = "submit" name = "add" value = "追加">';
-	print '<input type = "submit" name = "edit" value = "修正">';
-	print '<input type = "submit" name = "delete" value = "削除">';
-	print '</form>';
 
-}
-catch (Exception $e)
-{
-	print 'ただいま障害により大変ご迷惑をお掛けしております。';
-	exit();
-}
+	if(preg_match('/\A[0-9]+\z/',$gds_price)==0)
+		{
+		print '価格をきちんと入力してください。<br>';
+	}
+	else
+		{
+		print '価格:';
+		print $gds_price;
+		print '円<br>';
+	}
+
+	if($gds_img['size']>0)
+	{
+		if($gds_img['size']>1000000)
+		{
+			print '画像が大き過ぎます';
+		}
+		else
+		{
+			move_uploaded_file($gds_img['tmp_name'],'./img/'.$gds_img['name']);
+			print '<img src="./img/'.$gds_img['name'].'">';
+			print '<br>';
+		}
+	}
+
+	if($gds_name=='' || preg_match('/\A[0-9]+\z/',$gds_price)==0 || $gds_img['size'] > 1000000)
+		{
+			print '<form>';
+			print '<input type = "button" onclick = "history.back()" value = "戻る">';
+			print '</form>';
+	}
+	else
+	{
+		print '上記の商品を追加します。<br>';
+		print '<form method = "post" action = "pro_add_done.php">';
+		print '<input type = "hidden" name = "name" value = "'.$gds_name.'">';
+		print '<input type = "hidden" name = "price" value = "'.$gds_price.'">';
+		print '<input type = "hidden" name = "gazou_name" value = "'.$gds_img['name'] .'">';
+		print '<br>';
+		print '<input type = "button" onclick = "history.back()" value = "戻る">';
+		print '<input type = "submit" value = "OK">';
+		print '</form>';
+	}
 
 ?>
-
-<br>
-<a href = "../staff_login/staff_top.php">トップメニューへ</a><br>
-
 </body>
 </html>
