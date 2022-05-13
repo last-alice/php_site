@@ -3,7 +3,7 @@
     session_regenerate_id(true);
     if(isset($_SESSION['member_login'])==false)
     {
-        print 'ようこそゲスト様　';
+        print 'ようこそゲスト様  ';
         print '<a href="member_login.html">会員ログイン</a><br>';
         print '<br>';
     }
@@ -11,7 +11,7 @@
     {
 		print 'ようこそ';
         print $_SESSION['member_name'];
-		print '様　';
+		print '様  ';
 		print '<a href="member_logout.php">ログアウト</a><br>';
         print '<br>';
     }
@@ -38,7 +38,7 @@
 try
 {
 
-    $pro_code = $_GET['procode'];
+    $gds_code = $_GET['gdscode'];
 
     $dsn='mysql:dbname=shop;host=localhost;charset=utf8';
     $user='root';
@@ -54,7 +54,7 @@ try
     $rec = $stmt->fetch(PDO::FETCH_ASSOC);
     $gds_name = $rec['name'];
     $gds_price = $rec['price'];
-    $gds_gazou_name = $rec['img'];
+    $gds_img_name = $rec['img'];
 
     $dbh = null;
 
@@ -66,7 +66,7 @@ try
     {
         $disp_img='<img src="../img'.$gds_img_name.'">';
     }
-    print '<a href="shop_cartin.php?procode='.$gds_code.'">カートに入れる</a><br><br>';
+    print '<a href="shop_cartin.php?gdscode='.$gds_code.'">カートに入れる</a><br><br>';
 
 }
 catch(Exception $e)
